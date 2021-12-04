@@ -1,0 +1,28 @@
+version: '2'
+networks:
+- pk_network:
+  driver: bridge
+
+volumes:
+prometheus_data: {}
+
+services:
+prometheus:
+image: prom/prometheus
+container_name: pk_prometheus
+volumes:
+- ./prometheus/:/etc/prometheus/
+- prometheus_data:/prometheus
+command:
+- '-config.file=/etc/prometheus/prometheus.yml'
+- '-storage.local.path=/prometheus'
+- '-storage.local.memory-chunks=100000'
+restart: unless-stopped
+expose:
+- 9090
+ports:
+- 9090:9090
+networks:
+- pk_network
+labels:
+org.label-schema.group: "monitoring for PK containers"

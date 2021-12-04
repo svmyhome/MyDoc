@@ -1,0 +1,10 @@
+global:
+scrape_interval: 20s
+evaluation_interval: 20s
+# Добавить метку для графического представления
+external_labels: monitor: 'Docker-pk-monitor'
+# Конечные точки для сбора информации
+- job_name: 'pk_prometheus'
+scrape_interval: 25s
+static_configs:
+- targets: ['localhost:9090']
