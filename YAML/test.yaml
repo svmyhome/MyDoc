@@ -1,0 +1,58 @@
+# comments
+
+--- # Знак разделяет несколько yml описаний
+
+version: "3"
+
+# strings
+name: test
+name1: "test \n"
+name1: "test \n"
+name1: 'test'
+
+multilain: |
+  Эта строка
+  будет размещена 
+  в несколько строка
+
+singleline: >
+  Эта строка
+  будет отображаться
+  в одну строку
+
+
+# numbers
+age: 30
+version: 1.7
+
+# boolean
+isDev: true #false
+isDev: on #off
+isDev: yes #no
+
+# objects
+user:
+  name: Vasiy
+  age: 20
+
+# dictinaries 
+users:
+- user1:
+    name: Vasiy
+    age:20
+- user2:
+    name: Anna
+    age:30
+
+# list
+userlist:
+- Vasiy
+- Anna
+
+versions: [1.7, 6]
+versions2: ["1.2", 8]
+
+
+
+
+
