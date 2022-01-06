@@ -21,3 +21,5 @@
 - [X] Bug Magnet - заполнение полей
 - [X] Ruto - XPath Finder - поискс хпас локаторов
 - [X] WCAG Accessibility Audit Developer UI - тестирование доступности( список правмл которые нарушены)
+- [X] BlazeMeter - тестирование нагрузки
+- [X] Octotree и gitlab tree - показывает в браузере деорево GIT
