@@ -8,6 +8,7 @@
 - [X] IntelliJ IDEA
 - [X] Postman
 - [X] YAML
+- [X] JAR
 - [ ] Curl
 - [ ] WGET
 
