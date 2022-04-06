@@ -9,8 +9,8 @@
 - [X] Postman
 - [X] YAML
 - [X] JAR
-- [ ] Curl
-- [ ] WGET
+- [X] Curl
+- [X] WGET
 
 #### Web pluging for testing browsers:
 - [X] WhatFont - фонты

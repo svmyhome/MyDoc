@@ -1,0 +1,78 @@
+####################################
+curl --request GET \xxxxx
+  --url 'https://testbase.atlassian.net/rest/api/2/attachment/20299' \
+  --user 'mail.for.testbase@yandex.ru:cCehOzIeIcisnqaCzBKQ1E53' \
+  --header 'Accept: application/json'
+
+##################################
+
+
+
+# Authorization 
+
+curl --basic -u 'xxxxx:Spb11!*' -X GET -H 'Content-Type: application/json' -H 'Accept: application/json'  https://xxxxxxx.ru/back/rapi2/profile
+
+curl --basic -H "Authorization: Basic UkNUSUtLOlNwYjExISo=" -X GET -H 'Content-Type: application/json' -H 'Accept: application/json'  https://xxxxxxx.ru/back/rapi2/profile
+
+curl --basic -u 'xxxxx:Spb11!*' -X GET  https://xxxxxxx.ru/back/rapi2/profile
+
+curl --basic -u 'xxxxx:Spb11!*' https://xxxxxxx.ru/back/rapi2/profile
+
+curl -u 'xxxxx:Spb11!*' https://xxxxxxx.ru/back/rapi2/profile
+
+curl https://xxxxxxx.ru/back/rapi2/profile -u 'xxxxx:Spb11!*'
+ 
+
+######################## 3.5.1
+
+curl -X POST https://xxxxxxx.ru/back/rapi2/messages \
+  -H 'Accept: application/json' \
+  -H 'Authorization: Basic XXXXXXXXXXX' \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+    "Task": "Zadacha_1-28",
+    "Title": "Вова28",
+    "Text": "Тестовое сообщение",
+    "Files": [
+        {
+            "Name": "test.zip.enc",
+            "Encrypted": true,
+            "SignedFile": null,
+            "RepositoryType": "http",
+            "Size": "6728"
+        }
+    ]
+}'
+
+######################## 3.5.2
+curl -X POST https://xxxxxxx.ru/back/rapi2/messages/72d65396-1e54-4534-b547-c6a4f605632f/files/fec1b89e-f444-4b3f-8fe4-a7a0c133cf73/createUploadSession \
+  -H 'Postman-Token: c59ecb73-8414-4d32-b0f9-795114182389' \
+  -H 'cache-control: no-cache'
+
+######################## 3.5.3
+
+curl -X PUT \
+  https://xxxxxxx.ru/back/rapi2/messages/72d65396-1e54-4534-b547-c6a4f605632f/files/fec1b89e-f444-4b3f-8fe4-a7a0c133cf73 \
+  -H 'Content-Length: 6728' \
+  -H 'Content-Range: bytes 0-6727/6728' \
+  -H 'Content-Type: application/json' \
+  -H 'Postman-Token: 01099db3-624e-4f66-aec4-0885c4351838' \
+  -H 'cache-control: no-cache' \
+  -d '{
+	"key":"Content",
+	"type":"file",
+	"src":"/home/xxxxxx/Downloads/CBR/test1.zip.enc"
+}'
+
+######################## 3.5.4
+
+curl -X POST \
+  https://xxxxxxx.ru/back/rapi2/messages/72d65396-1e54-4534-b547-c6a4f605632f \
+  -H 'Postman-Token: ff716a68-7cb8-41e3-bb72-197eeadeb66e' \
+  -H 'cache-control: no-cache'
+
+
+
+
+
