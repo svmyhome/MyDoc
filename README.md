@@ -11,6 +11,7 @@
 - [X] JAR
 - [X] Curl
 - [X] WGET
+- [X] Gradle
 
 #### Web pluging for testing browsers:
 - [X] WhatFont - фонты
