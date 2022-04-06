@@ -13,6 +13,7 @@
 - [X] WGET
 - [X] Gradle
 - [X] PostgreSql
+- [X] Sublime
 
 #### Web pluging for testing browsers:
 - [X] WhatFont - фонты
