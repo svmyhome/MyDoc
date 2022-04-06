@@ -14,6 +14,7 @@
 - [X] Gradle
 - [X] PostgreSql
 - [X] Sublime
+- [X] Apache2
 
 #### Web pluging for testing browsers:
 - [X] WhatFont - фонты
