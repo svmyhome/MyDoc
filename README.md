@@ -12,6 +12,7 @@
 - [X] Curl
 - [X] WGET
 - [X] Gradle
+- [X] PostgreSql
 
 #### Web pluging for testing browsers:
 - [X] WhatFont - фонты
