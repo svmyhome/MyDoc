@@ -29,7 +29,7 @@
 - [X] BlazeMeter - тестирование нагрузки
 - [X] Octotree и gitlab tree - показывает в браузере деорево GIT
 
-```
+```mermaid
 flowchart LR
 
 A[Hard] -->|Text| B(Round)
