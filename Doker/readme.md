@@ -43,15 +43,14 @@ or cmd ```docker run -it ubuntu bash```
 ## Container
 
 ### Starting
-```docker run -d nginx``` -  running the container in detach mode 
+```docker run -it -d nginx``` -  running the container in interactive and detach mode 
 ```docker run -d --name my_nginx nginx``` -  running the container with the name
 ```docker run -d -p 8080:80 nginx``` — running the container with published ports HOST:CONTAINER  
 ```docker run -d -v ${PWD}:/usr/share/nginx/html -p 8080:80 nginx``` - mapping volumes to the container. ${PWD} - Show the path to local folder  
 ```docker run -d -v /home/vladimir/Downloads/Repository/PetProjects/MyDoc/Doker/nginx:/usr/share/nginx/html -p 8081:80 nginx``` - mapping using an absolute path  
-```docker run –it –d  Ubuntu bash``` – позволяеь запустить в фоновом режиме
-```docker run -it -d --name test2 --rm ubuntu bash``` – задает имя контейнера, удаляет после остановки  
+```docker run -it -d --name test2 --rm ubuntu bash``` - set name when container is creating and delete container after stop  
 
-запуск с разбиением
+running container with line split
 ```
 docker run \
 --name my-nginx2 \
@@ -63,12 +62,16 @@ nginx
 
 
 ### Working
-```docker exec -it b8e45bef8a83 bash```   -  запускает дополнительный процесс в запущенном контейнере выйти можно через exit. Контейнер не будет закрыт 
-```docker stop 2731223e570f``` - останавливает работу контейнера  
-```docker kill 2731223e570f``` - убивает зависший процесс  
-```docker container --rm имя или номер```  eудаляет контейнер после остановки  
-```docker container prun –f```  - удаляет все остановленные контейнеры без переспрашивания  
-```docker attach имя контейнера``` позволят зайти в конкретный контейнер для выхода Ctrl + p после Ctrl + q  
+### login into the same terminal session
+```docker attach NAME``` - login into the same terminal session. Exit ```Ctrl + p after Ctrl + q```  
+### Creation of a new terminal session
+```docker exec -it b8e45bef8a83 bash```- running additional process in a running container. You must use ```exit``` to exit the session. Container won't close  
+```docker stop 2731223e570f``` - stops the container  
+```docker kill 2731223e570f``` - kills a hung process
+### Delete containers
+```docker container --rm NAME or HASH``` - delete the container after stop  
+```docker container prun –f``` - delete all containers after stop without confirmation   
+
 Выполнение действий или подключение в уже работающий контейнер
 docker exec -w /tmp My_mongo pwd
 docker exec -e Myenv=1 My_mongo printenv
@@ -78,16 +81,42 @@ docker exec -w /tmp My_mongo bash -c 'mongo -version > mongo1.txt'
 
 
 ### Monitoring
-```docker container ls``` или ```docker ps``` - показывает работающие контейнеры  
-```docker container ls –a``` или ```docker ps -a``` – показывает все в том числе и остановленные  
-```docker container inspect 2731223e570f```  - показывает настройки контейнера  
-```docker container inspect 2731223e570f | grep IPAddress```– позволяет отфильтровать вывод  
-
-
-
+```docker container ls``` or ```docker ps``` - show only work containers  
+```docker container ls –a``` or ```docker ps -a``` – show all created containers  
+```docker container inspect 2731223e570f``` - show container settings  
+```docker container inspect 2731223e570f | grep IPAddress```– filtering   
 
 ## Image
+```docker history mongo``` – история создания образа
+```docker inspect mongo``` – информация об образе
+
+```docker save имя_образа > transfer.tar``` - сохраняет образ в виде файла
+```docker load -i transfer.tar``` - загружает образ в систему
+или
+```docker save –output nginx.tar nginx``` – сохраняет образ в виде файла
+```docker import nginx.tar svmyhome\nginx1```  - загружает образ в систему
+
+
+```docker image pull ubuntu``` – скачать образ
+```docker image push svmyhome/catnip``` – запушить в репозиторий
+```docker image push my_repo/my_image:my_tag``` – с тегом
+
+```docker images``` – список образов
+```docker image ls``` - – список образов
+```docker images --format "{{.Repository}} {{.Tag}}"``` – список нужных полей
+```docker images --format "table {{.Repository}} \t {{.Tag}}"``` – в виде таблицы лучшее читается
+
+
+```docker rmi hello-world``` – удаление образа
+
+```docker image rm python:3-onbuild``` – тоже 
+```docker image rm -f $(docker images -a -q)``` – удаление всех образов
+```docker image prune``` – удаляет образы none
+```docker image prune – a```  удаляет все образы для которых нет запущенных контейнеров
+```docker tag svmyhomenginx1:latest 11111``` – создает тег
+
 ## Dive
+dive id -утилита для анализа образа и его слоев
 ## Dockerfile
 ### build
 ### Multistaging build
@@ -101,6 +130,3 @@ docker exec -w /tmp My_mongo bash -c 'mongo -version > mongo1.txt'
 ## Копирование файлов и папок
 ## DOCKER COMPOSE
 ### Команды
-
-
-что внутри слоя
