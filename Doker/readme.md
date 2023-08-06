@@ -2,9 +2,9 @@
 
 ## Configure rights
 1. Creating groups
-```sudo groupadd docker```
+```sudo groupadd docker```  
 2. Adding users to a group
-```sudo usermod -aG docker $USER```
+```sudo usermod -aG docker ${USER}```  
 
 ## Location
 ```sudo ls /var/lib/docker/``` - catalog  
@@ -46,10 +46,10 @@ or cmd ```docker run -it ubuntu bash```
 ```docker run -it -d nginx``` -  running the container in interactive and detach mode 
 ```docker run -d --name my_nginx nginx``` -  running the container with the name
 ```docker run -d -p 8080:80 nginx``` — running the container with published ports HOST:CONTAINER  
-```docker run -d -v ${PWD}:/usr/share/nginx/html -p 8080:80 nginx``` - mapping volumes to the container. ${PWD} - Show the path to local folder  
+```docker run -d -v ${PWD}:/usr/share/nginx/html -v ${PWD}/22:/mathefaka:ro -p 8080:80 nginx``` - mapping volumes to the container. ${PWD} - Show the path to work folder. :ro - read only 
 ```docker run -d -v /home/vladimir/Downloads/Repository/PetProjects/MyDoc/Doker/nginx:/usr/share/nginx/html -p 8081:80 nginx``` - mapping using an absolute path  
 ```docker run -it -d --name test2 --rm ubuntu bash``` - set name when container is creating and delete container after stop  
-
+older
 running container with line split
 ```
 docker run \
@@ -65,30 +65,26 @@ nginx
 ### login into the same terminal session
 ```docker attach NAME``` - login into the same terminal session. Exit ```Ctrl + p after Ctrl + q```  
 ### Creation of a new terminal session
-```docker exec -it b8e45bef8a83 bash```- running additional process in a running container. You must use ```exit``` to exit the session. Container won't close  
+```docker exec -it b8e45bef8a83 bash``` - running additional process in a running container. You must use ```exit``` to exit the session. Container won't close  
+```docker exec -w /tmp container pwd``` - changing the working directory
+```docker exec d1f465dc6157 node --version > 1.txt``` - output data
+```docker exec -w /tmp d1f465dc6157 sh -c 'node --version > 1.txt'``` - changing the work directory and running the command in this directory  
+```docker exec -e Myenv=1 My_mongo printenv``` - adding a new environment to the container
 ```docker stop 2731223e570f``` - stops the container  
 ```docker kill 2731223e570f``` - kills a hung process
 ### Delete containers
 ```docker container --rm NAME or HASH``` - delete the container after stop  
 ```docker container prun –f``` - delete all containers after stop without confirmation   
 
-Выполнение действий или подключение в уже работающий контейнер
-docker exec -w /tmp My_mongo pwd
-docker exec -e Myenv=1 My_mongo printenv
-docker exec -it My_mongo bash
-docker exec My_mongo mongo -version > mongo.txt
-docker exec -w /tmp My_mongo bash -c 'mongo -version > mongo1.txt' 
-
-
 ### Monitoring
 ```docker container ls``` or ```docker ps``` - show only work containers  
 ```docker container ls –a``` or ```docker ps -a``` – show all created containers  
-```docker container inspect 2731223e570f``` - show container settings  
+```docker container inspect 2731223e570f```  or ```dockerclear inspect 2731223e570f```- show container settings  
 ```docker container inspect 2731223e570f | grep IPAddress```– filtering   
 
 ## Image
-```docker history mongo``` – история создания образа
-```docker inspect mongo``` – информация об образе
+```docker history mongo``` – the history of image creation  
+```docker inspect mongo``` – information about image  
 
 ```docker save имя_образа > transfer.tar``` - сохраняет образ в виде файла
 ```docker load -i transfer.tar``` - загружает образ в систему
@@ -111,10 +107,10 @@ docker exec -w /tmp My_mongo bash -c 'mongo -version > mongo1.txt'
 
 ```docker image rm python:3-onbuild``` – тоже 
 ```docker image rm -f $(docker images -a -q)``` – удаление всех образов
-```docker image prune``` – удаляет образы none
+```docker image prune``` or ```docker rmi -f$(docker images -f "dangling=true" -q)```– удаляет образы none
 ```docker image prune – a```  удаляет все образы для которых нет запущенных контейнеров
 ```docker tag svmyhomenginx1:latest 11111``` – создает тег
-
+```docker images -f "dangling=true"``` show not nessasery images  
 ## Dive
 dive id -утилита для анализа образа и его слоев
 ## Dockerfile
