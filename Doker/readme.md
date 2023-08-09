@@ -86,33 +86,27 @@ nginx
 ```docker history mongo``` – the history of image creation  
 ```docker inspect mongo``` – information about image  
 
-```docker save имя_образа > transfer.tar``` - сохраняет образ в виде файла
-```docker load -i transfer.tar``` - загружает образ в систему
-или
-```docker save –output nginx.tar nginx``` – сохраняет образ в виде файла
-```docker import nginx.tar svmyhome\nginx1```  - загружает образ в систему
+```docker save имя_образа > transfer.tar``` or ```docker save –output nginx.tar nginx``` - saving the image to the file  
+```docker load -i transfer.tar``` or ```docker import nginx.tar svmyhome\nginx1``` - uploading an image to the system  
 
+```docker image pull ubuntu``` – downloading image to the system
+```docker image push svmyhome/catnip``` – pushing the image to the repository  
+```docker image push my_repo/my_image:my_tag``` – pushing with tag  
+```docker tag svmyhomenginx1:latest 11111``` – creating the tag
 
-```docker image pull ubuntu``` – скачать образ
-```docker image push svmyhome/catnip``` – запушить в репозиторий
-```docker image push my_repo/my_image:my_tag``` – с тегом
+```docker images``` or ```docker image ls``` – a list of images
+```docker images --format "{{.Repository}} {{.Tag}}"``` – a list containing only the necessary columns  
+```docker images --format "table {{.Repository}} \t {{.Tag}}"``` – a list in the form of a table
 
-```docker images``` – список образов
-```docker image ls``` - – список образов
-```docker images --format "{{.Repository}} {{.Tag}}"``` – список нужных полей
-```docker images --format "table {{.Repository}} \t {{.Tag}}"``` – в виде таблицы лучшее читается
+```docker rmi hello-world``` or ```docker image rm python:3-onbuild``` – deleting the image  
+```docker image rm -f $(docker images -a -q)``` – deleting all the images  
+```docker image prune``` or ```docker rmi -f$(docker images -f "dangling=true" -q)```– deleting the NONE images  
+```docker image prune – a``` - deleting all images from non-running containers  
+```docker images -f "dangling=true"``` - show unnecessary images  
 
-
-```docker rmi hello-world``` – удаление образа
-
-```docker image rm python:3-onbuild``` – тоже 
-```docker image rm -f $(docker images -a -q)``` – удаление всех образов
-```docker image prune``` or ```docker rmi -f$(docker images -f "dangling=true" -q)```– удаляет образы none
-```docker image prune – a```  удаляет все образы для которых нет запущенных контейнеров
-```docker tag svmyhomenginx1:latest 11111``` – создает тег
-```docker images -f "dangling=true"``` show not nessasery images  
 ## Dive
-dive id -утилита для анализа образа и его слоев
+dive id - Utilities for analyzing images and their layers  
+
 ## Dockerfile
 ### build
 ### Multistaging build
