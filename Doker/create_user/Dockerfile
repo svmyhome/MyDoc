@@ -22,5 +22,5 @@ USER ${usual}
 WORKDIR /home/${usual}
 RUN echo ${USER} && whoami && pwd
 
-ENTRYPOINT ["/home/noroot/entrypoint.sh"]
+#ENTRYPOINT ["/home/noroot/entrypoint.sh"]
 EXPOSE 10000

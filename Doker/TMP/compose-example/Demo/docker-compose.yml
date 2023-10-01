@@ -3,7 +3,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./apps/api/Dockerfile
+      dockerfile: ./apps/api/Dockerfile_Description
     restart: always
     container_name: api
     volumes:

@@ -1,0 +1,67 @@
+# comments
+
+ARG MyARG=/home
+ARG CODE_VERSION=latest – аргумент сборки только на момент сборки
+ARG MY_ARG – можно передать в него значение во время сборки и использовать
+
+FROM  node:latest  -из чего образ сделан
+
+Label  version=”1.0” -указывает версию
+
+MAINTAINER = Vladimir Sarychev
+MAINTAINER Vladimir -кто автор образа
+
+USER root -под кем будет запускаться
+
+WORKDIR /opt/app – создется папка где будет запускаться, можно использовать несколько
+
+EXPOSE 80/TCP – Указывает на порт но не пробрасывает его
+
+ADD TMP/1.json .
+ADD *.json ./  - копирует все json\
+ADD –-chown=root files* /somedir
+ADD my_arc.tar.gz /somedir/ -разархивирует архив
+ADD http://url.tar.gz /somedir/ADD *.json ./  - копирует все json\
+ADD –-chown=root files* /somedir
+ADD my_arc.tar.gz /somedir/ -разархивирует архив
+ADD http://url.tar.gz /somedir/
+
+COPY TMP . - копирует из текущей директории в workdir рекомедуется вместо АДД, если нужно скачать и разархивировать лучше использовать curt и tar
+COPY *.json ./ -только копирует
+
+SHELL [“bin/sh”, ”-c”] – позволяет переопределить дефолтный басш
+RUN ls -la
+RUN echo Hello – запуск команды
+RUN apt-get update && apt-get install git -y объединять слои
+WORKDIR /home
+ADD *.json ./
+RUN ls -la
+ADD TMP/1.tar.xz ./tarxz/
+WORKDIR ./tarxz/
+
+ENV Foo=1 – определили переменную, остается в собранном образе
+ENV Foo1=$Foo
+
+VOLUME [“/data”] – создает volume на хост машине
+VOLUME ["/voldemar"]
+
+ENTRYPOINT [‘top’,’-c’] – команды запуска
+ENTRYPOINT ["/home/noroot/entrypoint.sh"]
+CMD [‘node’, “./cdsmkcmd/1.js”]
+CMD [‘python’, “main.py	”]
+CMD bash
+STOPSIGNAL 9 сигнал при останвке контейнера
+
+
+
+
+
+
+
+
+
+
+
+
+
+

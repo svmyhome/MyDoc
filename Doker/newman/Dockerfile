@@ -1,0 +1,9 @@
+ARG CODE_VERSION=alpine
+FROM node:$CODE_VERSION
+
+ARG COMMAND=newman
+RUN npm install -g $COMMAND
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_BACK=DEBIAN_FRONTEND
+
+CMD ["newman", "-v"]

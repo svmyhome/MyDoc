@@ -5,6 +5,7 @@
 #### Tools:
 - [X] Docker
 - [X] GIT
+- [X] GitLab 
 - [X] IntelliJ IDEA
 - [X] Postman
 - [X] YAML

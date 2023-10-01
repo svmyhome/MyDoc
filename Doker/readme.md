@@ -4,7 +4,7 @@
 1. Creating groups
 ```sudo groupadd docker```  
 2. Adding users to a group
-```sudo usermod -aG docker ${USER}```  
+```sudo usermod -aG docker ${USER}``` or ```sudo usermod -aG docker $(whoami)```  ]
 
 ## Location
 ```sudo ls /var/lib/docker/``` - catalog  
@@ -35,10 +35,19 @@ VERSION=v0.47.2 # use the latest release version from https://github.com/google/
   --device=/dev/kmsg \
   gcr.io/cadvisor/cadvisor:$VERSION
   ```
+``docker logs container_name`` - this command show log in the container  
+``docker logs -f container_name`` - this command show log in the container real time
 
-## Troubleshooting
+
+
+## Troubleshooting and configuration
 When you use gitBash on Windows. You should use ```winpty docker run -it ubuntu bash```
 or cmd ```docker run -it ubuntu bash```
+
+``.dockerignore`` - this file contains information about data that does not need to be saved in docker image   
+``# comment``
+``*/temp*`` or ``*/*/temp*`` or ``temp?`` - ignore everything that contains a mask  
+``!Readme.md`` - don't ignore everything that contains a mask
 
 ## Container
 
@@ -59,7 +68,7 @@ docker run \
 -d \
 nginx
 ```
-
+``docker rename 8742f12f5d95 new_container_name`` - rename container
 
 ### Working
 ### login into the same terminal session
@@ -81,6 +90,8 @@ nginx
 ```docker container ls –a``` or ```docker ps -a``` – show all created containers  
 ```docker container inspect 2731223e570f```  or ```dockerclear inspect 2731223e570f```- show container settings  
 ```docker container inspect 2731223e570f | grep IPAddress```– filtering   
+``docker inspect -f '{{ .NetworkSettings.IPAddress }}' 8742f12f5d95`` -  shows the IP address, only for a working container  
+``docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 8742f12f5d95``-  shows the IP address, only for a working container  
 
 ## Image
 ```docker history mongo``` – the history of image creation  
@@ -109,14 +120,73 @@ dive id - Utilities for analyzing images and their layers
 
 ## Dockerfile
 ### build
+```docker build -t testapi:latest .``` - creating an image, and when creating an image, all folders and files are saved in the created image
+```docker build -f ./apps/api/Dockerfile -t testapi:latest .``` - creating an image when placing a dockerfile in another folder
+```docker build --no-cache -t test1:latest .``` - creating an image without caching
+
 ### Multistaging build
+Multistaging build– позволяет пере использовать то что создано в другом билде и уменьшить объем текущего билда за счет не включения ненужных сборок
+
+FROM node:14-alpine as build
+WORKDIR /opt/app
+ADD *.json ./
+RUN npm install
+ADD . .
+RUN npm run build api
+
+FROM node:14-alpine
+WORKDIR /opt/app
+ADD package.json .
+RUN npm install --only=prod
+COPY --from=build /opt/app/dist/apps/api ./dist
+
+CMD ["node","./dist/main.js"]
+
 ## Network
+``bridge`` – изолированная сеть между контейнерами (default)
+``host`` – та же сеть что и у хоста
+``overlay`` -  docker Swarm
+``macVlan`` – на контейнер индивидульный мак выделяется
+``null`` – без сети
 ### Commands
+``docker network ls`` - shows network interfaces
+docker network create my-net1 – создание сети
+docker network connect my-net1 node2 – подключение к созданной сети
+docker network disconnect my-net1 – отключение от сети
+docker network inspect bridge– проверка конкретной сети (показывает в containers  только запущенные контейнеры)
+docker network prune -удаление
+docker network rm - удалени
+docker run --name=node3 --network my-net1 -d demo3:latest
+docker run -d --name=node4 -p 3000:3000 --network my-net1 demo3:latest
 ## MOUNT FILES AND DISKS
 ### Volumes
 ### volume in Dockerfile
 ### BIND папки
+```docker run -it --name post3 -v /home/vladimir/docker-demo-4:/postman demo-postman:latest``` - монтирует конкретный каалог хостовой тачки с файлави в папку образа
+полный синтаксис:
+```docker run -it --mount type=bind,source=/home/vladimir/docker-demo-4,target=/opt/app demo-postman:latest```
+```docker run -it --rm --mount type=volume,src=my_python,target=/bind python python /bash/python.py```
 ## TRPFS
-## Копирование файлов и папок
+Storing data in memory. Useful only for sensitive data.
+
+## Copying files and folders
+### Into the container
+```docker cp /home/vladimir/temp2/1.txt b487a6211a48:/tmp``` – copies the file to the docker image  
+```docker cp /home/vladimir/temp2/. b487a6211a48:/tmp``` – copies all content of the folders ``tem2`` to the folder ``tmp``  
+```docker cp /home/vladimir/test1/ b487a6211a48:/tmp``` – copies the folders ``test1`` with content to the folder ``tmp``
+
+### From the container
+```docker cp  b487a6211a48:/tmp/1.txt /home/vladimir/1111``` – copies the file from the docker image
+```docker cp  b487a6211a48:/tmp/. /home/vladimir/1111``` – copies all content of the folder from the docker image 
+```docker cp  b487a6211a48:/tmp/test1 /home/vladimir/1111```– copies the folder ``test1`` from the docker image
+
 ## DOCKER COMPOSE
+![img.png](img.png)
 ### Команды
+## Recommendation about optimization images
+1. Use original images
+2. Use images with tags :alpine
+3. Combine the ```apt``` command into the single ```RUN``` instruction  ```RUN apt-get update && apt-get install -y \
+    package-one \
+    package-two```
+4. 

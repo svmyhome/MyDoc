@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "76ab7ae7-6ea5-4407-aae0-c2c1d1a3cc18",
+		"name": "petstope",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10453041",
+		"_collection_link": "https://cloudy-shuttle-450360.postman.co/workspace/Microservices~6e3a2cd3-f3da-49ce-a421-4e7809b499ee/collection/10453041-76ab7ae7-6ea5-4407-aae0-c2c1d1a3cc18?action=share&source=collection_link&creator=10453041"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/1",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
